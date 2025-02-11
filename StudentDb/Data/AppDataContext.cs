@@ -21,7 +21,31 @@ namespace StudentDb.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<StudentCourse>()
+                .HasKey(sc => new { sc.StudentId, sc.CourseId });
 
+            modelBuilder.Entity<StudentCourse>()
+                .HasOne(sc => sc.Student)
+                .WithMany(sc => sc.StudentCourse)
+                .HasForeignKey(sc => sc.StudentId);
+
+            modelBuilder.Entity<StudentCourse>()
+                .HasOne(sc => sc.Course)
+                .WithMany(sc => sc.StudentCourse)
+                .HasForeignKey(sc => sc.CourseId);
+
+            modelBuilder.Entity<CourseLecturer>()
+                .HasKey(cl => new { cl.CourseId, cl.LecturerId });
+
+            modelBuilder.Entity<CourseLecturer>()
+                .HasOne(cl => cl.Course)
+                .WithMany(cl => cl.CourseLecturer)
+                .HasForeignKey(cl => cl.CourseId);
+
+            modelBuilder.Entity<CourseLecturer>()
+                .HasOne(cl => cl.Lecturer)
+                .WithMany(cl => cl.CourseLecturer)
+                .HasForeignKey(cl => cl.LecturerId);
         }
     }
 }

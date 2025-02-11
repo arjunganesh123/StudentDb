@@ -3,29 +3,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudentDb.Models
 {
-    public class Student
+    public class Course
     {
         [Key]
-        public int StudentId { get; set; }
-
+        public int CourseId { get; set; }
         [Required]
-        [MaxLength(30)]
-        [Column("StudentName")]
+        [StringLength(50)]
+        [Column("CourseName")]
         public string Name { get; set; }
-        [MaxLength(2)]
-        public int age { get; set; }
-        public DateTime DOB { get; set; }
-        public string Hobby { get; set; }
-        public virtual Address Address { get; set; }
 
         #region Relationships
 
             #region 1-M
-                public virtual ICollection<Lecturer> Lecturers { get; set; }
+                public virtual ICollection<Subject> Subjects { get; set; }
             #endregion
 
             #region M-M
                 public virtual ICollection<StudentCourse> StudentCourse { get; set; }
+                public virtual ICollection<CourseLecturer> CourseLecturer { get; set; }
             #endregion
         #endregion
     }
