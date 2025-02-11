@@ -6,6 +6,10 @@ namespace StudentDb.Data
     public class AppDataContext : DbContext
     {
         public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<Lecturer> Lecturers { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Address> Addresss { get; set; }
 
         private readonly string _connectionstring;
 
@@ -16,7 +20,7 @@ namespace StudentDb.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionstring);
+            optionsBuilder.UseLazyLoadingProxies().UseSqlServer(_connectionstring);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
